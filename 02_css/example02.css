@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#gnb {
+  text-align: center;
+}
+
+#gnbList {
+  display: inline-block;
+}
+
+#gnbList li {
+  background-color: #eee;
+  float: left;
+}
+
+#gnbList li a:hover {
+  background-color: #ccc;
+}
+
+#gnbList li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 38px;
+}
+
+#imgList {
+  padding: 50px 0;
+  background-color: pink;
+}
+
+#imgList ul {
+  width: 320px;
+  margin: 0 auto;
+}
+
+#imgList li {
+  float: left;
+}
+
+#imgList li + li {
+  margin-left: 10px;
+}
+
+#imgList li a {
+  display: block;
+  width: 100px;
+  height: 150px;
+
+  border: 3px solid #eee;
+  box-sizing: border-box;
+}
+
+.clearFix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+#imgList ul li {
+  background: center / auto 100% no-repeat;
+  transition: background-size 0.4s;
+
+  text-align: center;
+  line-height: 150px;
+  color: white;
+}
+
+#imgList ul li:first-child {
+  background-image: url("./assets/dog.1.jpg");
+}
+#imgList ul li:nth-child(2) {
+  background-image: url("./assets/pic1.jpg");
+}
+#imgList ul li:last-child {
+  background-image: url("./assets/pic2.jpg");
+}
+
+#imgList ul li:hover {
+  background-size: auto 120%;
+  transition: background-size 0.4s;
+
+  font-weight: 700;
+}

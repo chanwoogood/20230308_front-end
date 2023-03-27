@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Up&Down Game!</title>
+  </head>
+  <body>
+    <script>
+      var num = Math.floor(Math.random() * 1000) + 1;
+      console.log(num);
+
+      while (true) {
+        // 숫자로 써도 문자열로 값을 받는다.
+        var answer = prompt("숫자를 입력해주세요", "");
+        // 변경 불가능한 문자열이 전달되면, NaN(Not a Number) 반환
+        var answerNum = parseInt(answer);
+
+        // inNaN(값) : 값이 NaN가 맞으면 true, 아니면 false
+        // 값 === NaN => X
+        if (isNaN(answerNum)) {
+          alert("숫자만 입력 가능합니다.");
+        }
+
+        // 맞춰야될 숫자보다 작으면 작다고, 크면 크다고 알려주기
+        if (num === parseInt(answerNum)) {
+          // 정답이 나오면 while문 탈출
+          alert("정답입니다!");
+          break;
+        } else if (num < parseInt(answerNum)) {
+          alert("DOWN!");
+        } else {
+          alert("UP!");
+        }
+      }
+    </script>
+  </body>
+</html>

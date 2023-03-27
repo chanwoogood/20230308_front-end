@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS 배경 지정하기</title>
+    <style>
+      .container {
+        width: 500px;
+        height: 300px;
+        border: 10px solid rgba(218, 247, 207, 0.685);
+
+        background-color: pink;
+        background-clip: border-box;
+        background-image: url(../assets/dog.1.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-origin: border-box;
+        background-attachment: fixed;
+
+        background: yellow url(../assets/dog.1.jpg) no-repeat 0 0 / cover;
+
+        overflow: scroll; /* 부모 요소를 벗어나는 자식 요소를 처리하는 방법을 지정한다. */
+      }
+
+      .gradient{
+        width: 500px;
+        height: 300px;
+        border: 3px solid black;
+
+        background: linear-gradient(135deg, blue, white 50%, red)
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS background</h1>
+
+    <h2>background-color</h2>
+    <p>배경색을 지정한다.</p>
+
+    <h2>background-clip</h2>
+    <p>배경색이 지정되는 범위를 설정한다.</p>
+    <ul>
+      <li>border-box(기본값) : border 영역까지 지정된다.</li>
+      <li>padding-box : padding 영역까지 지정된다.</li>
+      <li>content-box : content 영역까지 지정된다.</li>
+    </ul>
+
+    <h2>background-image</h2>
+    <p>
+      이미지를 배경으로 지정한다. <br />
+      url("파일경로")의 형식의 값을 사용한다.
+    </p>
+
+    <h2>background-repeat</h2>
+    <p>배경 이미지의 반복 방법을 지정한다.</p>
+    <ul>
+      <li>repeat(기본값) : 가로, 세로방향으로 이미지를 반복한다.</li>
+      <li>repeat-x : 가로방향으로 이미지를 반복한다.</li>
+      <li>repeat-y : 세로방향으로 이미지를 반복한다.</li>
+      <li>no-repeat : 반복하지 않는다.</li>
+    </ul>
+
+    <h2>background-position</h2>
+    <p>
+      배경 이미지의 위치를 지정한다. <br />
+      x축, y축 순으로 지정한다. <br />
+      한가지만 지정 시 나머지는 center로 간주한다.
+    </p>
+
+    <h2>background-size</h2>
+    <p>배경 이미지의 크기를 지정한다. <br /></p>
+    x축>y축 순으로 지정한다. <br />
+    한쪽만 지정시 원본 비율에 자동으로 맞춘다.
+    <ul>
+      <li>auto : 원본 이미지의 크기만큼 표시한다.</li>
+      <li>contain : 이미지가 잘리지 않는 범위 내에서 가장 크게 표시한다.</li>
+      <li>cover : 이미지가 잘리더라도 요소를 가득 채우게 표시한다.</li>
+    </ul>
+
+    <h2>background-attachment</h2>
+    <p>배경 이미지의 첨부 방식을 지정한다.</p>
+    <ul>
+      <li>scroll(기본값): 스크롤을 해도 이미지가 고정된다.</li>
+      <li>local : 스크롤에 따라 배경 이미지가 함께 움직인다.</li>
+      <li>
+        fixed : 뷰포트를 기준으로 고정된다. 배경 이미지로 지정된 요소를 통해서만
+        보인다.
+      </li>
+    </ul>
+
+    <h2>background</h2>
+    <p>
+      배경관련 속성을 한번에 지정하는 단축속성이다. <br />
+      다른 것은 순서가 상관없지만, position과 size는 /로 구분해서 작성해야한다.
+      (position 먼저) </br>
+      단축속성에 size를 포함시키고 싶으면 무조건 앞에 position을 지정해야한다.
+      
+    </p>
+
+    <h2>background-origin</h2>
+    <p>배경 이미지가 시작되는 범위를 지정한다.</p>
+    <div class="container">
+      성진이 귀여웡 Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Quaerat aut beatae aperiam cum veritatis ex voluptatibus? Voluptates
+      necessitatibus recusandae voluptatem minus eius dolorum? Nisi veritatis
+      sed cum vero accusamus itaque nostrum? Labore sunt perferendis velit illo,
+      nam molestias corrupti sint quod modi adipisci iste, inventore, commodi
+      ullam repudiandae animi enim beatae. Rerum magnam pariatur quo laboriosam
+      esse qui quasi doloremque fuga aliquam nobis perspiciatis expedita
+      voluptas cum alias hic, natus voluptatem veniam animi odit voluptatibus. A
+      quibusdam aliquid nobis ea incidunt deleniti suscipit quam eveniet id
+      eius. Minima ex dolorem delectus. Aliquam vero repellat id itaque numquam
+      ipsam ab nulla maxime quod harum dolore asperiores quae, debitis
+      consequuntur voluptatem sunt omnis expedita natus corrupti aperiam! Rem
+      saepe reprehenderit, corporis ducimus atque aliquam modi quia minima sunt?
+      Ab dicta soluta numquam iure, quasi fugit natus ad voluptas repellendus
+      exercitationem facere molestias officiis, odit minima dolorem laborum
+      asperiores optio libero possimus laudantium ipsa necessitatibus rerum
+      fugiat. Mollitia, vitae aperiam nihil sed eligendi voluptatibus dolor ab
+      unde eum nemo iure totam optio velit explicabo nobis aliquam, reiciendis
+      tempora quaerat sunt officia quam placeat veniam repellat recusandae?
+      Neque hic sit consequuntur alias illum odit, voluptatibus voluptatem rem
+      vero error praesentium deserunt nihil atque sint, natus architecto nemo
+      harum at tempora beatae provident? Qui fugiat praesentium, nisi recusandae
+      debitis modi nam et sit ipsa excepturi, architecto tenetur, suscipit fugit
+      repellat non? Eveniet quos consequatur neque suscipit quod dolorum maiores
+      debitis eos at aliquam nesciunt ipsam doloremque qui accusamus, est
+      voluptatibus cumque accusantium, architecto, esse molestiae ab. Nobis
+      minus, vitae unde perferendis modi deleniti, assumenda similique quod quam
+      rem neque dolorum in! Reprehenderit iste quasi repellat corporis dolores
+      ea veritatis laborum deleniti optio eligendi, fugiat consectetur est
+      voluptatem sapiente distinctio maxime dicta quae quia reiciendis illo sit!
+      Totam alias tenetur nihil eius eaque amet ex enim officiis hic. Rerum est
+      ab beatae ipsum doloremque. Qui accusantium aperiam at, maxime et ullam
+      repellendus quo, perferendis aut atque animi voluptate in quae quisquam
+      officia facere minus error libero repellat ut blanditiis ea! A laboriosam
+      debitis quibusdam dolorem dignissimos ipsam nemo adipisci, architecto unde
+      iure sapiente quis ab, consequatur accusantium dolores doloremque aperiam
+      ipsa odit harum commodi quasi eveniet nobis vero eum? Molestiae expedita
+      nulla repudiandae quasi assumenda aliquam, earum temporibus nesciunt
+      adipisci, cum minus nemo soluta rem? Culpa repellendus, dolor excepturi
+      impedit fugit nesciunt amet minus incidunt. Ipsum aperiam sit ipsam
+      molestiae vitae optio nihil. Numquam alias soluta neque? Aliquam modi,
+      molestias, facilis eos consequuntur doloribus eveniet culpa suscipit ab,
+      facere exercitationem dignissimos reprehenderit ratione quisquam
+      consequatur tenetur. Magni fugiat accusantium eum asperiores adipisci at,
+      illo officiis aliquam tempore neque nam velit aspernatur quisquam quia
+      soluta minima reprehenderit quae odit non nostrum? Debitis libero fuga
+      natus tempore possimus, laudantium accusantium! Repellendus magni
+      cupiditate, nulla ipsa, amet vel doloribus nisi similique corrupti
+      eligendi exercitationem iste delectus assumenda vero consequatur,
+      explicabo cumque illum eveniet magnam quae cum ea tenetur. Laborum minus
+      hic sapiente, eligendi rerum asperiores eius aut blanditiis corporis natus
+      voluptatem quae ab ducimus. Delectus doloribus quod officia vitae.
+    </div>
+    <div class="gradient"></div>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 100vw;
+        height: 100vh;
+        border: 3px solid black;
+
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: 100px 1fr 100px;
+
+        grid-template-areas:
+          "header header"
+          "sidebar main"
+          "footer footer";
+      }
+
+      .header {
+        grid-area: header;
+        background: gray;
+      }
+
+      .sidebar {
+        grid-area: sidebar;
+        background: #eeeeee;
+      }
+
+      .main {
+        grid-area: main;
+        background: #aaa;
+      }
+
+      .footer {
+        grid-area: footer;
+      }
+
+      /*.header {
+        height: 100px;
+        background: pink;
+        grid-column: 1 / -1;
+      }
+
+      .sidebar {
+        background: skyblue;
+      }
+
+      .main {
+        background: greenyellow;
+      }
+
+      .footer {
+        height: 100px;
+        background: plum;
+        grid-column: 1 / -1;
+      }*/
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header"><h2>헤더 영역</h2></div>
+      <div class="sidebar"><h2>사이드바 영역</h2></div>
+      <div class="main"><h2>메인 영역</h2></div>
+      <div class="footer"><h2>푸터 영역</h2></div>
+    </div>
+  </body>
+</html>
