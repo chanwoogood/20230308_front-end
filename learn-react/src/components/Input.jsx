@@ -28,4 +28,5 @@ export default function Input() {
        => input의 name 속성은 e.tartget.name으로 읽을 수 있다.
        => 객체["속성"]을 통해 특정 속성을 참조 및 할당 할 수 있다
        => 업데이트 할 때는 다른 input 값들도 스프레드 문법을 통해서 복사한 후에 특정 속성만 업데이트 할 수 있다.
+       
 */
