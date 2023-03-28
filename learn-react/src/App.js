@@ -1,9 +1,9 @@
-import Pointer from "./components/Pointer";
+import Input from "./components/Input";
 
 export default function App() {
   return (
     <div>
-      <Pointer />
+      <Input />
     </div>
   );
 }
