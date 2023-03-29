@@ -1,53 +1,50 @@
-import { useState } from "react";
-import TodoHeader from "./components/TodoHeader";
-import TodoInput from "./components/TodoInput";
-import TodoList from "./components/TodoList";
+import { useEffect, useState } from "react";
 
-const initialState = [
-  { id: 1, text: "React 프로젝트 생성하기", done: true },
-  { id: 2, text: "컴포넌트 만들기", done: true },
-  { id: 3, text: "상태 관리하기", done: false },
-];
+export default function Effect() {
+  const [count, setCount] = useState(0);
+  const [input, setInput] = useState("");
 
-let nextId = 4;
+  useEffect(() => {
+    // 매 렌더링마다 실행된다. 렌더링이 끝난 이후에 실행된다.
+    console.log("렌더링");
+  });
 
-export default function App() {
-  const [todos, setTodos] = useState(initialState);
+  /* 
+    두번째 인자 : 의존성 배열. 콜백함수가 의존하고 있는 값들을 배열로 전달한다.
+      => 의존성 배열에 있는 값이 변했을 때에 콜백가 실행된다.
+      => 화면에 처음 나타날 때(마운트)도 실행된다. 
+      => 업데이트 이후에 실행된다.
 
-  const createTodo = (text) => {
-    // concat() : 전달된 인자가 배열이면 두 배열을 합친 새로운 배열을 반환.
-    //    => 인자가 배열이 아니면 기존배열에 추가한 새로운 배열을 반환.
-    setTodos(todos.concat({ id: nextId++, text: text, done: false }));
-  };
+    콜백 함수를 return하면 업데이트 직전에 실행된다.
+  */
+  useEffect(() => {
+    alert("count click! count : " + count);
 
-  const toggleTodo = (id) => {
-    const newTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, done: !todo.done } : todo
-    );
-    setTodos(newTodos);
+    return () => {
+      alert("count click! before count : " + count);
+    };
+  }, [count]);
 
-    /*
-      const newTodos = todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, done: !todo.done };
-        } else {
-          return todo;
-        }
-      });
-      setTodos(newTodos);
-    */
-  };
+  /* 
+    두번째 인자로 빈 배열을 전달하면 마운트될 때만 실행된다.
+      => API 요청, 라이브러리 설정, setTimeout 등을 통한 스케줄 등록.
 
-  const removeTodo = (id) => {
-    const newTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(newTodos);
-  };
+    콜백함수를 return하면 언마운트(화면에서 사라짐)될 때 실행된다. 이를 클린업(뒷정리) 함수라고 한다.
+      => 라이브러리 인스턴스 삭제, clearTimeout 등을 통한 스케줄 취소.
+  */
+  useEffect(() => {
+    alert("App Component is mounted!");
+    return () => {
+      alert("App Component is unmouted!");
+    };
+  }, []);
 
   return (
     <div>
-      <TodoHeader todos={todos} />
-      <TodoInput createTodo={createTodo} />
-      <TodoList todos={todos} removeTodo={removeTodo} toggleTodo={toggleTodo} />
+      <h2>{count}</h2>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <h2>{input}</h2>
+      <input type="text" onChange={(e) => setInput(e.target.value)} />
     </div>
   );
 }
