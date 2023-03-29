@@ -1,36 +1,55 @@
-import { useState } from "react";
+import { useReducer } from "react";
 
-export default function Counter() {
-  const [count, setCount] = useState(0);
-  const [hide, setHide] = useState(false);
+/*
+    reducer(상태값, 액션객체)
+       - reducer함수가 return 값이 상태 업데이트된다.
+       - state 현재 상태값이 전달된다.
+       - action : dispatch의 인자가 전달된다.
+*/
+function reducer(state, action) {
+  if (action.type === "INCREASE") {
+    return { ...state, count: state.count + state.amount };
+  } else if (action.type === "DECREASE") {
+    return { ...state, count: state.count - state.amount };
+  }
 
-  const handleCount = (num) => {
-    setCount(count + num);
-  };
-  const handleHide = () => {
-    setHide(!hide);
-  };
-
+  switch (action.type) {
+    case "INCREASE":
+      return { ...state, count: state.count + state.amount };
+    case "DCREASE":
+      return { ...state, count: state.count - state.amount };
+    case "CHANGE_AMOUNT":
+      return { ...state, amount: action.amount };
+    default:
+      return state;
+  }
+}
+function Counter() {
+  const [count, dispatch] = useReducer(reducer, 0);
   return (
     <div>
-      <button onClick={handleHide}>{hide ? "show" : "hide"}</button>
-      {hide || <h2>{count}</h2>}
-      <button onClick={() => handleCount(1)}>+1</button>
-      <button onClick={() => handleCount(-1)}>-1</button>
+      <h2>{state.count}</h2>
+      <button onclick={() => dispatch({ type: "INCREASE" })}>+3</button>
+      <button onClick={() => dispatch({ type: "DECREASE" })}>-1</button>
+      type="number" onChange=
+      {(e) =>
+        dispatch({ type: "CHABGE_AMOUNT", amount: parseInt(e.target.value) })
+      }
     </div>
   );
 }
+export default Counter;
 
 /*
-   상태(state) 관리
-     - 컴포넌트 내에서 지역 변수를 사용할 때 두가지 문제가 있다. 
-       1) 지역 변수의 값을 변경해도 재렌더링이 일어나지 않는다.
-       2) 렌더링이 다시 일어나면 함수를 다시 호출하는 것이기 때문에, 기존의 변수값을 기억하지 않는다.
+    useReducer
+       - 리듀서 함수를 통해서 상태 업데이트를 한다.
+          1) 상태를 업데이트하는 로직이 복잡할 때.
+          2) 여러 상태를 한번에 관리할 때.
+          3) 외부에 상태 업데이트 로직을 작성 할 때.
+       - 리듀서 함수의 return 값이 곧 다음 상태가 된다.
+          => 첫번째 매개변수에 현재 상태값이 전달된다.
+          => 두번째 매개변수 업데이트에 필요한 값들을 담은 액션 객체가 전달된다.
+       - 디스패치 함수는 상태 업데이트를 요청하는 함수이다.
+          => 디스패치에 액션 객체를 담아서 호출하면 리듀서 함수에 전달된다.
 
-     - 컴포넌트에는 상태를 만들 수 있는데, 이 상태가 업데이트가 일어나면 렌더링이 다시 일어난다.
-     - useState라는 리액트 훅을 통해서 컴포넌트의 상태를 만들 수 있다.
-         => 배열에 두개의 값이 반환되는데, 첫번째는 상태값, 두번째는 상태 업데이트 함수가 반환된다.
-         => 배열 비구조화 할당을 통해 간편하게 사용할 수 있다.
-     - 같은 컴포넌트가 여러개 렌더링 될 때, 각자 별개의 상태를 가진다.
-     - 하나의 컴포넌트가 여러개의 상태를 가질 수 있다. 
-*/
+ */
