@@ -1,50 +1,47 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 
-export default function Effect() {
-  const [count, setCount] = useState(0);
-  const [input, setInput] = useState("");
+import TodoHeader from "./components/TodoHeader";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
 
-  useEffect(() => {
-    // 매 렌더링마다 실행된다. 렌더링이 끝난 이후에 실행된다.
-    console.log("렌더링");
-  });
+function getUndoneCount(todos) {
+  console.log("해야할 일 세는 중...");
+  return todos.filter((todo) => !todo.done).length;
+}
 
-  /* 
-    두번째 인자 : 의존성 배열. 콜백함수가 의존하고 있는 값들을 배열로 전달한다.
-      => 의존성 배열에 있는 값이 변했을 때에 콜백가 실행된다.
-      => 화면에 처음 나타날 때(마운트)도 실행된다. 
-      => 업데이트 이후에 실행된다.
+let nextId = 4;
+export default function App() {
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState("");
 
-    콜백 함수를 return하면 업데이트 직전에 실행된다.
-  */
-  useEffect(() => {
-    alert("count click! count : " + count);
+  // useMemo*연산할 함수, 의존성 배열) : 의존하고 있는 값이 변했을 때에만 연산.
+  const undoneCount = useMemo(() => getUndoneCount(todos), [todos]);
 
-    return () => {
-      alert("count click! before count : " + count);
-    };
-  }, [count]);
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
 
-  /* 
-    두번째 인자로 빈 배열을 전달하면 마운트될 때만 실행된다.
-      => API 요청, 라이브러리 설정, setTimeout 등을 통한 스케줄 등록.
+  // useCallback(함수, 의존성 배열) : 의존하고 있는 값이 변했을 때에만 함수를 재생성.
+  const createTodo = useCallback(() => {
+    setTodos(todos.concat({ id: nextId++, text: text, done: false }));
+  }, [todos, text]);
 
-    콜백함수를 return하면 언마운트(화면에서 사라짐)될 때 실행된다. 이를 클린업(뒷정리) 함수라고 한다.
-      => 라이브러리 인스턴스 삭제, clearTimeout 등을 통한 스케줄 취소.
-  */
-  useEffect(() => {
-    alert("App Component is mounted!");
-    return () => {
-      alert("App Component is unmouted!");
-    };
-  }, []);
+  const toggleTodo = (id) => {
+    const newTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, done: !todo.done } : todo
+    );
+    setTodos(newTodos);
+  };
 
+  const removeTodo = (id) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
   return (
     <div>
-      <h2>{count}</h2>
-      <button onClick={() => setCount(count + 1)}>+1</button>
-      <h2>{input}</h2>
-      <input type="text" onChange={(e) => setInput(e.target.value)} />
+      <TodoHeader todos={todos} />
+      <TodoInput onChange={onChange} createTodo={createTodo} />
+      <TodoList todos={todos} removeTodo={removeTodo} toggleTodo={toggleTodo} />
     </div>
   );
 }
