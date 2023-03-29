@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer, useState } from "react";
+import { useReducer, todosReducer, get } from "react";
 import Counter from "./components/Counter";
 import TodoHeader from "./components/TodoHeader";
 import TodoInput from "./components/TodoInput";
@@ -9,16 +9,13 @@ function getUndoneCount(todos) {
   return todos.filter((todo) => !todo.done).length;
 }
 
-let nextId = 4;
-
-// 상태를 업데이트하는 함수.
-function reducer(state, action) {}
-
 export default function App() {
-  // const [todos, dispatch] = useReducer();
+  const [todos, dispatch] = useReducer(todosReducer, []);
   return (
     <div>
-      <Counter />
+      <TodoHeader />
+      <TodoInput dispatch={dispatch} />
+      <TodoList todos={todos} dispatch={dispatch} />
     </div>
   );
 }

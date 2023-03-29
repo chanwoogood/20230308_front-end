@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 // src/components/TodoInput.jsx
 function TodoInput({ createTodo, onChange }) {
