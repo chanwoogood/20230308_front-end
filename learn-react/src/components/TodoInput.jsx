@@ -1,30 +1,76 @@
-import React, { useEffect, useRef, dispatch, setText, text } from "react";
+import React, { useRef, useState } from "react";
+import styled, { keyframes } from "styled-components";
+import { useTodoDispatch } from "../todos";
+import Button from "./Button";
 
 // src/components/TodoInput.jsx
-function TodoInput({ createTodo, onChange }) {
+function TodoInput() {
+  const [text, setText] = useState("");
   const inputRef = useRef(null);
+  const [edit, setEdit] = useState(false);
+
+  const dispatch = useTodoDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault(); // form의 기본 기능 실행 x.
-    dispatch({ type: "CREATE_TODO", text: text });
-    inputRef.current.focus();
+    if (edit) {
+      dispatch({ type: "CREATE_TODO", text: text });
+      inputRef.current.focus();
+      setEdit(false);
+    } else {
+      setEdit(true);
+    }
   };
 
-  useEffect(() => {
-    console.log("TodoInput Render");
-  });
   return (
-    <div>
+    <Container>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          ref={inputRef}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button>등록</button>
+        {edit && (
+          <input
+            type="text"
+            onChange={(e) => setText(e.target.value)}
+            ref={inputRef}
+            autoFocus
+          />
+        )}
+        <BtnWrapper>
+          <Button width="100%">{edit ? "등록" : "추가"}</Button>
+        </BtnWrapper>
       </form>
-    </div>
+    </Container>
   );
 }
+
+const slideUp = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+`;
+
+const Container = styled.div`
+  padding: 10px;
+  border-top: 1px solid black;
+  form {
+    input {
+      width: 100%;
+      margin-bottom: 4px;
+      outline: none;
+      padding: 5px;
+      animation-name: ${slideUp} ${fadeIn};
+      animation-duration: 0.4s 0.4s;
+    }
+  }
+`;
+
+const BtnWrapper = styled.div`
+  position: relative;
+  z-index: 2;
+`;
 
 export default React.memo(TodoInput);
