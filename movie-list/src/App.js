@@ -1,58 +1,118 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useReducer, useState } from "react";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "LOADING":
+      return {
+        loading: true,
+        error: null,
+        data: null,
+      };
+    case "SUCCESS":
+      return {
+        loading: false,
+        erorr: null,
+        data: action.data,
+      };
+    case "ERROR": {
+      return {
+        loading: false,
+        data: null,
+        error: action.error,
+      };
+    }
+    default:
+      return state;
+  }
+}
 
 function App() {
-  const [profile, setProfile] = useState();
-  const [name, setName] = useState("");
+  const [state, dispatch] = useReducer(reducer, {
+    data: null,
+    loading: false,
+    error: null,
+  });
+  const { data, loading, error } = state;
+  const [text, setText] = useState("");
 
   const handleSubmit = async () => {
-    // input 입력값 alert창 띄우기!
-
-    console.log(name);
-
     try {
-      const res = await fetch("http://localhost:8000/profile", {
-        method: "put",
-        body: JSON.stringify({
-          name,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      await axios.post("http://localhost:8000/todos", {
+        text,
+        done: false,
       });
 
-      const data = await res.json();
-      setProfile(data);
-    } catch (e) {
-      console.log(e.message);
+      fetchData();
+    } catch (error) {
+      dispatch({ type: "ERROR", error });
+    }
+  };
+
+  const handleRemove = async (id) => {
+    try {
+      await axios.delete("http://localhost:8000/todos/" + id);
+
+      fetchData();
+    } catch (error) {
+      dispatch({ type: "ERROR", error });
+    }
+  };
+
+  const handleToggle = async (id, done) => {
+    try {
+      await axios.patch("http://localhost:8000/todos/" + id, {
+        done: !done,
+      });
+
+      fetchData();
+    } catch (error) {
+      dispatch({ type: "ERROR", error });
+    }
+  };
+
+  // async 함수로 바꿔보기!
+  const fetchData = async () => {
+    try {
+      dispatch({ action: "LOADING" });
+
+      const { data } = await axios.get("http://localhost:8000/todos");
+
+      dispatch({ type: "SUCCESS", data });
+    } catch (error) {
+      dispatch({ type: "ERROR", error });
     }
   };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        // Reqeust를 보낸다. 원래 Promise지만 await를 통해서 resolve 될 때까지 기다린다.
-        const res = await fetch("http://localhost:8000/profile");
-        // Response를 JS로 읽을 수 있게 변환한다. 원래 Promise.
-        const data = await res.json();
-        // 변환이 완료되면 set.
-        setProfile(data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
     fetchData();
   }, []);
 
-  if (!profile) return <div>로딩 중...</div>;
+  if (loading) return <div>로딩 중...</div>;
+
+  if (error) return <div>{error.message}</div>;
+
+  if (!data) return null;
 
   return (
     <div>
-      <h1>{profile.name}</h1>
-      <input type="text" onChange={(e) => setName(e.target.value)} />
-      <button onClick={handleSubmit} type="button">
-        이름 변경
-      </button>
+      <input type="text" onChange={(e) => setText(e.target.value)} />
+      <button onClick={handleSubmit}>등록</button>
+      <ul>
+        {data.map((todo) => (
+          <li
+            key={todo.id}
+            style={{
+              textDecoration: todo.done && "line-through",
+            }}
+          >
+            <span onClick={() => handleToggle(todo.id, todo.done)}>
+              {todo.text}
+            </span>
+            <button onClick={() => handleRemove(todo.id)}>삭제</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
