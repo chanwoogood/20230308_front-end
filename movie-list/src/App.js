@@ -40,8 +40,12 @@ function App() {
           <Sidebar />
           <MainContent>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/movie/*" element={<Movie />} />
+              <Route>
+                <Route path="/" element={<Home />} />
+                <Route path="/movie/*" element={<Movie />} />
+                <Route path=":id" element={<div>상세보기</div>} />
+                <Route path="popular" element={<div>인기</div>} />
+              </Route>
               <Route path="/tv/*" element={<TV />} />
               <Route path="/person/*" element={<Person />} />
             </Routes>

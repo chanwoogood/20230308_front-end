@@ -9,14 +9,15 @@ function MainContent({ children }) {
 }
 
 const Container = styled.div`
-  background-color: #eee;
+  background-color: #131212;
   padding-top: 50px;
 `;
 
 const Wrapper = styled.div`
-  max-width: 900px;
+  max-width: 1200px;
   padding: 20px;
   margin: 0 auto;
+  color: white;
 `;
 
 export default MainContent;
